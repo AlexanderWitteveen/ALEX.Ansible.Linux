@@ -1,0 +1,9 @@
+---
+
+#- name: Set network1
+#  shell: |
+#    echo "FAILED"
+#  register: result
+#  changed_when: '"CHANGED" in result.stdout'
+#  failed_when: '"FAILED" in result.stdout'
+

@@ -1,0 +1,12 @@
+---
+
+- name: "Playbook: Add NFS Share"
+  hosts: "{{ args_host }}"
+  gather_facts: false
+  become: true
+
+  vars_files:
+    - /etc/ansible/inventory/vars.yml
+
+  roles:
+    - alex.linux.addnfsshare

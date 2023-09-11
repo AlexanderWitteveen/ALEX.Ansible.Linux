@@ -1,0 +1,22 @@
+namespace: alex
+
+name: linux
+
+version: 0.1.5
+## Do not change - version is updated automatically during build
+
+readme: README.md
+
+authors:
+- Alexander Witteveen <alex.witteveen@live.nl>
+
+description: a Linux collection
+
+tags: []
+
+# Collections that this collection requires to be installed for it to be usable. The key of the dict is the
+# collection label 'namespace.name'. The value is a version range
+# L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
+# range specifiers can be set and are separated by ','
+dependencies: {}
+
