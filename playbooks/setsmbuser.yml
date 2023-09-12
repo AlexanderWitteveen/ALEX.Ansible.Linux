@@ -1,0 +1,14 @@
+---
+
+- name: "Playbook: Set SMB User"
+  hosts: "{{ args_host }}"
+  gather_facts: false
+  become: true
+  vars:
+    ansible_host: "{{ args_ipaddress }}"
+
+  vars_files:
+    - /etc/ansible/inventory/vars.yml
+
+  roles:
+    - alex.linux.setsmbuser

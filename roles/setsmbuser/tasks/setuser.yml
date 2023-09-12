@@ -1,0 +1,5 @@
+---
+
+- name: Set SMB User
+  shell: |
+    (echo "{{ args_smb_password }}" ; echo "{{ args_smb_password }}") | smbpasswd -s -a {{ args_smb_user }}
