@@ -1,9 +1,23 @@
 ---
 
-#- name: Set network1
-#  shell: |
-#    echo "FAILED"
-#  register: result
-#  changed_when: '"CHANGED" in result.stdout'
-#  failed_when: '"FAILED" in result.stdout'
-
+- name: add nfs share
+  shell: |
+    echo "Path: {{ args_nfs_path }}"
+    echo "mode: {{ args_nfs_mode }}"
+    echo "target: {{ args_nfs_target }}"
+    line="{{ args_nfs_path }} {{ args_nfs_target }}({{ args_nfs_mode }},sync,no_subtree_check)"
+    count=$(cat /etc/exports | grep -x -F "$line" | wc -l)
+    echo "count = $count"
+    #echo "line [$line]"
+    #echo "---------------------------"
+    #cat /etc/exports
+    #echo "---------------------------"
+    if [ $count -gt 0 ] ; then
+      echo "NO CHANGE"
+    else
+      echo $line >> /etc/exports
+      exportfs -a
+      echo "CHANGED"
+    fi
+  register: result
+  changed_when: '"CHANGED" in result.stdout'

@@ -1,9 +1,26 @@
 ---
 
-#- name: Set network1
-#  shell: |
-#    echo "FAILED"
-#  register: result
-#  changed_when: '"CHANGED" in result.stdout'
-#  failed_when: '"FAILED" in result.stdout'
-
+- name: add smb share
+  shell: |
+    echo "Path: {{ args_smb_name }}"
+    echo "Path: {{ args_smb_comment }}"
+    echo "Path: {{ args_smb_path }}"
+    echo "mode: {{ args_smb_mode }}"
+    echo "mode: {{ args_smb_guest }}"
+    line="[{{ args_smb_name }}]"
+    count=$(cat /etc/samba/smb.conf | grep -x -F "$line" | wc -l)
+    echo "count = $count"
+    if [ $count -gt 0 ] ; then
+      echo "NO CHANGE"
+    else
+      echo "[{{ args_smb_name }}]" >> /etc/samba/smb.conf
+      echo "   comment = {{ args_smb_comment }}" >> /etc/samba/smb.conf
+      echo "   path = {{ args_smb_path }}" >> /etc/samba/smb.conf
+      echo "   read only = {{ args_smb_mode }}" >> /etc/samba/smb.conf
+      echo "   browseable = yes" >> /etc/samba/smb.conf
+      echo "   guest ok = {{ args_smb_guest }}" >> /etc/samba/smb.conf
+      service smbd restart
+      echo "CHANGED"
+    fi
+  register: result
+  changed_when: '"CHANGED" in result.stdout'

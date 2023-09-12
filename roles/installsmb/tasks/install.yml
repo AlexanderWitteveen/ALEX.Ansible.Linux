@@ -1,9 +1,14 @@
 ---
 
-#- name: Set network1
-#  shell: |
-#    echo "FAILED"
-#  register: result
-#  changed_when: '"CHANGED" in result.stdout'
-#  failed_when: '"FAILED" in result.stdout'
+- name: Install a list of packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - samba 
 
+- name: set firewall
+  shell: |
+    ufw allow samba

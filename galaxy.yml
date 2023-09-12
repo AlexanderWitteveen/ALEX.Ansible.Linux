@@ -2,7 +2,7 @@ namespace: alex
 
 name: linux
 
-version: 0.1.5
+version: 0.1.6
 ## Do not change - version is updated automatically during build
 
 readme: README.md
