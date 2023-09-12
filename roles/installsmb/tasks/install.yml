@@ -11,4 +11,10 @@
 
 - name: set firewall
   shell: |
-    ufw allow samba
+    command=$(which ufw)
+    if [ $command ] ; then
+      ufw allow nfs
+      echo "set ufw"
+    else
+      echo "ufw not present"
+    fi
