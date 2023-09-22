@@ -1,0 +1,25 @@
+---
+
+- name: Install a list of packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - cifs-utils
+    ansible_connection: ssh
+    ansible_host: "{{ args_smbclient_ipaddress }}"
+  become: true
+
+- name: Template a file to /etc/file.conf
+  ansible.builtin.template:
+    src: .smbcred.j2
+    dest: "/home/{{ args_smbclient_username }}/.{{ args_smbclient_basename }}/.smbcred"
+    owner: "{{ args_smbclient_username }}"
+    group: "{{ args_smbclient_groupname }}"
+    mode: '0400'
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ args_smbclient_ipaddress }}"
+  become: true

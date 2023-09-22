@@ -7,7 +7,10 @@
     update_cache: yes
   vars:
     packages:
-    - nfs-kernel-server 
+    - samba 
+    ansible_connection: ssh
+    ansible_host: "{{ args_smbserver_ipaddress }}"
+  become: true
 
 - name: set firewall
   shell: |
@@ -18,3 +21,7 @@
     else
       echo "ufw not present"
     fi
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ args_smbserver_ipaddress }}"
+  become: true

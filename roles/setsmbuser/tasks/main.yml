@@ -1,3 +1,10 @@
 ---
 
-- include_tasks: setuser.yml
+- name: Set SMB User
+  shell: |
+    (echo "{{ args_smbuser_password }}" ; echo "{{ args_smbuser_password }}") | smbpasswd -s -a {{ args_smbuser_user }}
+  vars:
+    ansible_connection: ssh
+    ansible_host: "{{ args_smbserver_ipaddress }}"
+  become: true
+
