@@ -2,9 +2,9 @@
 
 - name: Set SMB User
   shell: |
-    (echo "{{ args_smbuser_password }}" ; echo "{{ args_smbuser_password }}") | smbpasswd -s -a {{ args_smbuser_user }}
+    (echo "{{ prop_admin_password }}" ; echo "{{ prop_admin_password }}") | smbpasswd -s -a {{ prop_admin_username }}
   vars:
     ansible_connection: ssh
-    ansible_host: "{{ args_smbserver_ipaddress }}"
+    ansible_host: "{{ prop_ipaddress }}"
   become: true
 

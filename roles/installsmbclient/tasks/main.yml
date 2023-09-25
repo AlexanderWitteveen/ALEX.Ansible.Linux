@@ -9,17 +9,17 @@
     packages:
     - cifs-utils
     ansible_connection: ssh
-    ansible_host: "{{ args_smbclient_ipaddress }}"
+    ansible_host: "{{ prop_ipaddress }}"
   become: true
 
 - name: Template a file to /etc/file.conf
   ansible.builtin.template:
     src: .smbcred.j2
-    dest: "/home/{{ args_smbclient_username }}/.{{ args_smbclient_basename }}/.smbcred"
-    owner: "{{ args_smbclient_username }}"
-    group: "{{ args_smbclient_groupname }}"
+    dest: "/home/{{ prop_admin_username }}/.{{ prop_basename }}/.smbcred"
+    owner: "{{ prop_admin_username }}"
+    group: "{{ prop_admin_groupname }}"
     mode: '0400'
   vars:
     ansible_connection: ssh
-    ansible_host: "{{ args_smbclient_ipaddress }}"
+    ansible_host: "{{ prop_ipaddress }}"
   become: true

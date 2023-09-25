@@ -1,5 +1,7 @@
 ---
 
+++++++++++++++ NEED tot be changed see SMB +++++++++++++++++++++++++++
+
 - name: add nfs share
   shell: |
     echo "Path: {{ args_nfsshare_path }}"

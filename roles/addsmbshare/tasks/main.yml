@@ -2,29 +2,30 @@
 
 - name: add smb share
   shell: |
-    echo "Path: {{ args_smbshare_name }}"
-    echo "Path: {{ args_smbshare_comment }}"
-    echo "Path: {{ args_smbshare_path }}"
-    echo "mode: {{ args_smbshare_mode }}"
-    echo "mode: {{ args_smbshare_guest }}"
-    line="[{{ args_smbshare_name }}]"
+    #echo "Path: {{ item.name }}"
+    #echo "Path: {{ item.comment }}"
+    #echo "Path: {{ item.path }}"
+    #echo "mode: {{ item.mode }}"
+    #echo "mode: {{ item.guest }}"
+    line="[{{ item.name }}]"
     count=$(cat /etc/samba/smb.conf | grep -x -F "$line" | wc -l)
-    echo "count = $count"
+    #echo "count = $count"
     if [ $count -gt 0 ] ; then
       echo "NO CHANGE"
     else
-      echo "[{{ args_smbshare_name }}]" >> /etc/samba/smb.conf
-      echo "   comment = {{ args_smbshare_comment }}" >> /etc/samba/smb.conf
-      echo "   path = {{ args_smbshare_path }}" >> /etc/samba/smb.conf
-      echo "   read only = {{ args_smbshare_mode }}" >> /etc/samba/smb.conf
+      echo "[{{ item.name }}]" >> /etc/samba/smb.conf
+      echo "   comment = {{ item.comment }}" >> /etc/samba/smb.conf
+      echo "   path = {{ item.path }}" >> /etc/samba/smb.conf
+      echo "   read only = {{ item.mode }}" >> /etc/samba/smb.conf
       echo "   browseable = yes" >> /etc/samba/smb.conf
-      echo "   guest ok = {{ args_smbshare_guest }}" >> /etc/samba/smb.conf
+      echo "   guest ok = {{ item.guest }}" >> /etc/samba/smb.conf
       service smbd restart
       echo "CHANGED"
     fi
   register: result
+  loop: "{{ prop_smb_shares }}"
   changed_when: '"CHANGED" in result.stdout'
   vars:
     ansible_connection: ssh
-    ansible_host: "{{ args_smbshare_ipaddress }}"
+    ansible_host: "{{ prop_ipaddress }}"
   become: true

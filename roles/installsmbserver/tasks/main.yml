@@ -9,7 +9,7 @@
     packages:
     - samba 
     ansible_connection: ssh
-    ansible_host: "{{ args_smbserver_ipaddress }}"
+    ansible_host: "{{ prop_ipaddress }}"
   become: true
 
 - name: set firewall
@@ -23,5 +23,5 @@
     fi
   vars:
     ansible_connection: ssh
-    ansible_host: "{{ args_smbserver_ipaddress }}"
+    ansible_host: "{{ prop_ipaddress }}"
   become: true
