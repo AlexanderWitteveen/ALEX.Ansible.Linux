@@ -4,7 +4,7 @@
   ansible.posix.mount:
     src: "{{ item.source }}"
     path: "{{ item.path }}"
-    opts: 'rw,vers=3,file_mode=0777,dir_mode=0777,dom=WORKGROUP,credentials=/home/{{ prop_admin_username }}/.{{ prop_basename }}/.smbcred'
+    opts: 'rw,auto,vers=3,file_mode=0777,dir_mode=0777,dom=WORKGROUP,credentials=/home/{{ prop_admin_username }}/.{{ prop_basename }}/.smbcred'
     fstype: cifs
     state: mounted
   loop: "{{ prop_smb_mounts }}"
